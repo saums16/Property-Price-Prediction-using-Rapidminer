@@ -1,1 +1,2 @@
 # Rapidminer
+Predicting the property prices location based which included implementation of several Machine learning techniques such as Decision Tree, Random Forest and the Generalized Linear Model for the prediction of the prices in the upcoming year. Project was implemented using the RapidMiner platform. Results concluded that on deployment of three models the performance of decision tree was optimum giving out the accurate predictions results.
