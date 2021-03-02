@@ -1,0 +1,380 @@
+<?xml version="1.0" encoding="UTF-8"?><process version="9.7.002">
+  <context>
+    <input/>
+    <output/>
+    <macros/>
+  </context>
+  <operator activated="true" class="process" compatibility="9.7.002" expanded="true" name="Process">
+    <parameter key="logverbosity" value="init"/>
+    <parameter key="random_seed" value="2001"/>
+    <parameter key="send_mail" value="never"/>
+    <parameter key="notification_email" value=""/>
+    <parameter key="process_duration_for_mail" value="30"/>
+    <parameter key="encoding" value="SYSTEM"/>
+    <process expanded="true">
+      <operator activated="true" class="read_csv" compatibility="9.7.002" expanded="true" height="68" name="Read CSV" width="90" x="45" y="34">
+        <parameter key="csv_file" value="C:/Users/admin/Downloads/property_price.csv"/>
+        <parameter key="column_separators" value=","/>
+        <parameter key="trim_lines" value="false"/>
+        <parameter key="use_quotes" value="true"/>
+        <parameter key="quotes_character" value="&quot;"/>
+        <parameter key="escape_character" value="\"/>
+        <parameter key="skip_comments" value="true"/>
+        <parameter key="comment_characters" value="#"/>
+        <parameter key="starting_row" value="1"/>
+        <parameter key="parse_numbers" value="true"/>
+        <parameter key="decimal_character" value="."/>
+        <parameter key="grouped_digits" value="false"/>
+        <parameter key="grouping_character" value=","/>
+        <parameter key="infinity_representation" value=""/>
+        <parameter key="date_format" value="yyyy-MM-dd"/>
+        <parameter key="first_row_as_names" value="true"/>
+        <list key="annotations"/>
+        <parameter key="time_zone" value="SYSTEM"/>
+        <parameter key="locale" value="English (United States)"/>
+        <parameter key="encoding" value="windows-1252"/>
+        <parameter key="read_all_values_as_polynominal" value="false"/>
+        <list key="data_set_meta_data_information">
+          <parameter key="0" value="OrganisationLabel.true.polynominal.attribute"/>
+          <parameter key="1" value="OrganisationURI.true.polynominal.attribute"/>
+          <parameter key="2" value="PublishedDate.true.date.attribute"/>
+          <parameter key="3" value="LatestData.true.polynominal.attribute"/>
+          <parameter key="4" value="DurationFrom.true.date.attribute"/>
+          <parameter key="5" value="DurationTo.true.polynominal.attribute"/>
+          <parameter key="6" value="ReportingPeriodType.true.polynominal.attribute"/>
+          <parameter key="7" value="Month.true.polynominal.attribute"/>
+          <parameter key="8" value="GeoEntityName.true.polynominal.attribute"/>
+          <parameter key="9" value="GeoCode.true.polynominal.attribute"/>
+          <parameter key="10" value="GeoName.true.polynominal.attribute"/>
+          <parameter key="11" value="GeoURI.true.polynominal.attribute"/>
+          <parameter key="12" value="AveragePrice.true.integer.attribute"/>
+          <parameter key="13" value="AveragePriceDetached.true.integer.attribute"/>
+          <parameter key="14" value="AveragePriceSemiDetached.true.integer.attribute"/>
+          <parameter key="15" value="AveragePriceTerraced.true.integer.attribute"/>
+          <parameter key="16" value="AveragePriceFlatOrMaisonette.true.integer.attribute"/>
+        </list>
+        <parameter key="read_not_matching_values_as_missings" value="false"/>
+        <parameter key="datamanagement" value="double_array"/>
+        <parameter key="data_management" value="auto"/>
+      </operator>
+      <operator activated="true" class="replace_missing_values" compatibility="9.7.002" expanded="true" height="103" name="Replace Missing Values" width="90" x="179" y="34">
+        <parameter key="return_preprocessing_model" value="false"/>
+        <parameter key="create_view" value="false"/>
+        <parameter key="attribute_filter_type" value="subset"/>
+        <parameter key="attribute" value=""/>
+        <parameter key="attributes" value="AveragePrice|AveragePriceDetached|AveragePriceFlatOrMaisonette|AveragePriceSemiDetached|AveragePriceTerraced|LatestData|ReportingPeriodType"/>
+        <parameter key="use_except_expression" value="false"/>
+        <parameter key="value_type" value="attribute_value"/>
+        <parameter key="use_value_type_exception" value="false"/>
+        <parameter key="except_value_type" value="time"/>
+        <parameter key="block_type" value="attribute_block"/>
+        <parameter key="use_block_type_exception" value="false"/>
+        <parameter key="except_block_type" value="value_matrix_row_start"/>
+        <parameter key="invert_selection" value="false"/>
+        <parameter key="include_special_attributes" value="false"/>
+        <parameter key="default" value="average"/>
+        <list key="columns"/>
+      </operator>
+      <operator activated="true" class="normalize" compatibility="9.7.002" expanded="true" height="103" name="Normalize" width="90" x="313" y="34">
+        <parameter key="return_preprocessing_model" value="false"/>
+        <parameter key="create_view" value="false"/>
+        <parameter key="attribute_filter_type" value="all"/>
+        <parameter key="attribute" value=""/>
+        <parameter key="attributes" value=""/>
+        <parameter key="use_except_expression" value="false"/>
+        <parameter key="value_type" value="numeric"/>
+        <parameter key="use_value_type_exception" value="false"/>
+        <parameter key="except_value_type" value="real"/>
+        <parameter key="block_type" value="value_series"/>
+        <parameter key="use_block_type_exception" value="false"/>
+        <parameter key="except_block_type" value="value_series_end"/>
+        <parameter key="invert_selection" value="false"/>
+        <parameter key="include_special_attributes" value="false"/>
+        <parameter key="method" value="Z-transformation"/>
+        <parameter key="min" value="0.0"/>
+        <parameter key="max" value="1.0"/>
+        <parameter key="allow_negative_values" value="false"/>
+      </operator>
+      <operator activated="true" class="set_role" compatibility="9.7.002" expanded="true" height="82" name="Set Role" width="90" x="447" y="34">
+        <parameter key="attribute_name" value="AveragePrice"/>
+        <parameter key="target_role" value="label"/>
+        <list key="set_additional_roles"/>
+      </operator>
+      <operator activated="true" class="optimize_selection" compatibility="9.7.002" expanded="true" height="103" name="Optimize Selection" width="90" x="581" y="34">
+        <parameter key="selection_direction" value="forward"/>
+        <parameter key="limit_generations_without_improval" value="true"/>
+        <parameter key="generations_without_improval" value="1"/>
+        <parameter key="limit_number_of_generations" value="false"/>
+        <parameter key="keep_best" value="1"/>
+        <parameter key="maximum_number_of_generations" value="10"/>
+        <parameter key="normalize_weights" value="true"/>
+        <parameter key="use_local_random_seed" value="false"/>
+        <parameter key="local_random_seed" value="1992"/>
+        <parameter key="user_result_individual_selection" value="false"/>
+        <parameter key="show_population_plotter" value="false"/>
+        <parameter key="plot_generations" value="10"/>
+        <parameter key="constraint_draw_range" value="false"/>
+        <parameter key="draw_dominated_points" value="true"/>
+        <parameter key="maximal_fitness" value="Infinity"/>
+        <process expanded="true">
+          <operator activated="true" class="concurrency:cross_validation" compatibility="9.7.002" expanded="true" height="145" name="Cross Validation" width="90" x="246" y="136">
+            <parameter key="split_on_batch_attribute" value="false"/>
+            <parameter key="leave_one_out" value="false"/>
+            <parameter key="number_of_folds" value="10"/>
+            <parameter key="sampling_type" value="automatic"/>
+            <parameter key="use_local_random_seed" value="false"/>
+            <parameter key="local_random_seed" value="1992"/>
+            <parameter key="enable_parallel_execution" value="true"/>
+            <process expanded="true">
+              <operator activated="true" class="set_role" compatibility="9.7.002" expanded="true" height="82" name="Set Role (2)" width="90" x="112" y="85">
+                <parameter key="attribute_name" value="AveragePrice"/>
+                <parameter key="target_role" value="label"/>
+                <list key="set_additional_roles"/>
+              </operator>
+              <operator activated="true" class="concurrency:parallel_decision_tree" compatibility="9.7.002" expanded="true" height="103" name="Decision Tree (2)" width="90" x="179" y="238">
+                <parameter key="criterion" value="least_square"/>
+                <parameter key="maximal_depth" value="10"/>
+                <parameter key="apply_pruning" value="true"/>
+                <parameter key="confidence" value="0.1"/>
+                <parameter key="apply_prepruning" value="true"/>
+                <parameter key="minimal_gain" value="0.01"/>
+                <parameter key="minimal_leaf_size" value="2"/>
+                <parameter key="minimal_size_for_split" value="4"/>
+                <parameter key="number_of_prepruning_alternatives" value="3"/>
+              </operator>
+              <connect from_port="training set" to_op="Set Role (2)" to_port="example set input"/>
+              <connect from_op="Set Role (2)" from_port="example set output" to_op="Decision Tree (2)" to_port="training set"/>
+              <connect from_op="Decision Tree (2)" from_port="model" to_port="model"/>
+              <portSpacing port="source_training set" spacing="0"/>
+              <portSpacing port="sink_model" spacing="0"/>
+              <portSpacing port="sink_through 1" spacing="0"/>
+            </process>
+            <process expanded="true">
+              <operator activated="true" class="apply_model" compatibility="9.7.002" expanded="true" height="82" name="Apply Model (2)" width="90" x="45" y="187">
+                <list key="application_parameters"/>
+                <parameter key="create_view" value="false"/>
+              </operator>
+              <operator activated="true" class="performance" compatibility="9.7.002" expanded="true" height="82" name="Performance (2)" width="90" x="179" y="136">
+                <parameter key="use_example_weights" value="true"/>
+              </operator>
+              <connect from_port="model" to_op="Apply Model (2)" to_port="model"/>
+              <connect from_port="test set" to_op="Apply Model (2)" to_port="unlabelled data"/>
+              <connect from_op="Apply Model (2)" from_port="labelled data" to_op="Performance (2)" to_port="labelled data"/>
+              <connect from_op="Performance (2)" from_port="performance" to_port="performance 1"/>
+              <portSpacing port="source_model" spacing="0"/>
+              <portSpacing port="source_test set" spacing="0"/>
+              <portSpacing port="source_through 1" spacing="0"/>
+              <portSpacing port="sink_test set results" spacing="0"/>
+              <portSpacing port="sink_performance 1" spacing="0"/>
+              <portSpacing port="sink_performance 2" spacing="0"/>
+            </process>
+          </operator>
+          <connect from_port="example set" to_op="Cross Validation" to_port="example set"/>
+          <connect from_op="Cross Validation" from_port="performance 1" to_port="performance"/>
+          <portSpacing port="source_example set" spacing="0"/>
+          <portSpacing port="source_through 1" spacing="0"/>
+          <portSpacing port="sink_performance" spacing="0"/>
+        </process>
+      </operator>
+      <operator activated="true" class="split_data" compatibility="9.7.002" expanded="true" height="82" name="Split Data" width="90" x="715" y="34">
+        <enumeration key="partitions">
+          <parameter key="ratio" value="0.7"/>
+          <parameter key="ratio" value="0.3"/>
+        </enumeration>
+        <parameter key="sampling_type" value="automatic"/>
+        <parameter key="use_local_random_seed" value="false"/>
+        <parameter key="local_random_seed" value="1992"/>
+      </operator>
+      <operator activated="true" class="multiply" compatibility="9.7.002" expanded="true" height="124" name="Multiply" width="90" x="45" y="187"/>
+      <operator activated="true" class="h2o:generalized_linear_model" compatibility="9.7.001" expanded="true" height="124" name="Generalized Linear Model" width="90" x="179" y="340">
+        <parameter key="family" value="AUTO"/>
+        <parameter key="link" value="family_default"/>
+        <parameter key="solver" value="AUTO"/>
+        <parameter key="reproducible" value="false"/>
+        <parameter key="maximum_number_of_threads" value="4"/>
+        <parameter key="use_regularization" value="true"/>
+        <parameter key="lambda_search" value="false"/>
+        <parameter key="number_of_lambdas" value="0"/>
+        <parameter key="lambda_min_ratio" value="0.0"/>
+        <parameter key="early_stopping" value="true"/>
+        <parameter key="stopping_rounds" value="3"/>
+        <parameter key="stopping_tolerance" value="0.001"/>
+        <parameter key="standardize" value="true"/>
+        <parameter key="non-negative_coefficients" value="false"/>
+        <parameter key="add_intercept" value="true"/>
+        <parameter key="compute_p-values" value="false"/>
+        <parameter key="remove_collinear_columns" value="false"/>
+        <parameter key="missing_values_handling" value="MeanImputation"/>
+        <parameter key="max_iterations" value="0"/>
+        <parameter key="specify_beta_constraints" value="false"/>
+        <list key="beta_constraints"/>
+        <parameter key="max_runtime_seconds" value="0"/>
+        <list key="expert_parameters"/>
+      </operator>
+      <operator activated="true" class="apply_model" compatibility="9.7.002" expanded="true" height="82" name="Apply Model (4)" width="90" x="313" y="340">
+        <list key="application_parameters"/>
+        <parameter key="create_view" value="false"/>
+      </operator>
+      <operator activated="true" class="performance_regression" compatibility="9.7.002" expanded="true" height="82" name="Performance (3)" width="90" x="447" y="340">
+        <parameter key="main_criterion" value="first"/>
+        <parameter key="root_mean_squared_error" value="true"/>
+        <parameter key="absolute_error" value="true"/>
+        <parameter key="relative_error" value="true"/>
+        <parameter key="relative_error_lenient" value="false"/>
+        <parameter key="relative_error_strict" value="false"/>
+        <parameter key="normalized_absolute_error" value="false"/>
+        <parameter key="root_relative_squared_error" value="false"/>
+        <parameter key="squared_error" value="true"/>
+        <parameter key="correlation" value="false"/>
+        <parameter key="squared_correlation" value="false"/>
+        <parameter key="prediction_average" value="true"/>
+        <parameter key="spearman_rho" value="false"/>
+        <parameter key="kendall_tau" value="false"/>
+        <parameter key="skip_undefined_labels" value="true"/>
+        <parameter key="use_example_weights" value="true"/>
+      </operator>
+      <operator activated="true" class="performance_to_data" compatibility="9.7.002" expanded="true" height="82" name="Performance to Data (3)" width="90" x="581" y="340"/>
+      <operator activated="true" class="generate_attributes" compatibility="9.7.002" expanded="true" height="82" name="Generate Attributes (3)" width="90" x="715" y="340">
+        <list key="function_descriptions"/>
+        <parameter key="keep_all" value="true"/>
+      </operator>
+      <operator activated="true" class="concurrency:parallel_random_forest" compatibility="9.7.002" expanded="true" height="103" name="Random Forest" width="90" x="179" y="238">
+        <parameter key="number_of_trees" value="100"/>
+        <parameter key="criterion" value="least_square"/>
+        <parameter key="maximal_depth" value="10"/>
+        <parameter key="apply_pruning" value="false"/>
+        <parameter key="confidence" value="0.1"/>
+        <parameter key="apply_prepruning" value="true"/>
+        <parameter key="minimal_gain" value="0.01"/>
+        <parameter key="minimal_leaf_size" value="2"/>
+        <parameter key="minimal_size_for_split" value="4"/>
+        <parameter key="number_of_prepruning_alternatives" value="3"/>
+        <parameter key="random_splits" value="false"/>
+        <parameter key="guess_subset_ratio" value="true"/>
+        <parameter key="subset_ratio" value="0.2"/>
+        <parameter key="voting_strategy" value="confidence vote"/>
+        <parameter key="use_local_random_seed" value="false"/>
+        <parameter key="local_random_seed" value="1992"/>
+        <parameter key="enable_parallel_execution" value="true"/>
+      </operator>
+      <operator activated="true" class="apply_model" compatibility="9.7.002" expanded="true" height="82" name="Apply Model (3)" width="90" x="313" y="238">
+        <list key="application_parameters"/>
+        <parameter key="create_view" value="false"/>
+      </operator>
+      <operator activated="true" class="performance_regression" compatibility="9.7.002" expanded="true" height="82" name="Performance (4)" width="90" x="447" y="238">
+        <parameter key="main_criterion" value="first"/>
+        <parameter key="root_mean_squared_error" value="true"/>
+        <parameter key="absolute_error" value="true"/>
+        <parameter key="relative_error" value="true"/>
+        <parameter key="relative_error_lenient" value="false"/>
+        <parameter key="relative_error_strict" value="false"/>
+        <parameter key="normalized_absolute_error" value="false"/>
+        <parameter key="root_relative_squared_error" value="false"/>
+        <parameter key="squared_error" value="true"/>
+        <parameter key="correlation" value="false"/>
+        <parameter key="squared_correlation" value="false"/>
+        <parameter key="prediction_average" value="true"/>
+        <parameter key="spearman_rho" value="false"/>
+        <parameter key="kendall_tau" value="false"/>
+        <parameter key="skip_undefined_labels" value="true"/>
+        <parameter key="use_example_weights" value="true"/>
+      </operator>
+      <operator activated="true" class="performance_to_data" compatibility="9.7.002" expanded="true" height="82" name="Performance to Data (2)" width="90" x="581" y="238"/>
+      <operator activated="true" class="generate_attributes" compatibility="9.7.002" expanded="true" height="82" name="Generate Attributes (2)" width="90" x="715" y="238">
+        <list key="function_descriptions"/>
+        <parameter key="keep_all" value="true"/>
+      </operator>
+      <operator activated="true" class="concurrency:parallel_decision_tree" compatibility="9.7.002" expanded="true" height="103" name="Decision Tree" width="90" x="179" y="136">
+        <parameter key="criterion" value="least_square"/>
+        <parameter key="maximal_depth" value="10"/>
+        <parameter key="apply_pruning" value="true"/>
+        <parameter key="confidence" value="0.1"/>
+        <parameter key="apply_prepruning" value="true"/>
+        <parameter key="minimal_gain" value="0.01"/>
+        <parameter key="minimal_leaf_size" value="2"/>
+        <parameter key="minimal_size_for_split" value="4"/>
+        <parameter key="number_of_prepruning_alternatives" value="3"/>
+      </operator>
+      <operator activated="true" class="apply_model" compatibility="9.7.002" expanded="true" height="82" name="Apply Model" width="90" x="313" y="136">
+        <list key="application_parameters"/>
+        <parameter key="create_view" value="false"/>
+      </operator>
+      <operator activated="true" class="performance_regression" compatibility="9.7.002" expanded="true" height="82" name="Performance" width="90" x="447" y="136">
+        <parameter key="main_criterion" value="first"/>
+        <parameter key="root_mean_squared_error" value="true"/>
+        <parameter key="absolute_error" value="true"/>
+        <parameter key="relative_error" value="true"/>
+        <parameter key="relative_error_lenient" value="false"/>
+        <parameter key="relative_error_strict" value="false"/>
+        <parameter key="normalized_absolute_error" value="false"/>
+        <parameter key="root_relative_squared_error" value="false"/>
+        <parameter key="squared_error" value="true"/>
+        <parameter key="correlation" value="false"/>
+        <parameter key="squared_correlation" value="false"/>
+        <parameter key="prediction_average" value="true"/>
+        <parameter key="spearman_rho" value="false"/>
+        <parameter key="kendall_tau" value="false"/>
+        <parameter key="skip_undefined_labels" value="true"/>
+        <parameter key="use_example_weights" value="true"/>
+      </operator>
+      <operator activated="true" class="performance_to_data" compatibility="9.7.002" expanded="true" height="82" name="Performance to Data" width="90" x="581" y="136"/>
+      <operator activated="true" class="generate_attributes" compatibility="9.7.002" expanded="true" height="82" name="Generate Attributes" width="90" x="715" y="136">
+        <list key="function_descriptions"/>
+        <parameter key="keep_all" value="true"/>
+      </operator>
+      <operator activated="true" class="append" compatibility="9.7.002" expanded="true" height="124" name="Append" width="90" x="849" y="187">
+        <parameter key="datamanagement" value="double_array"/>
+        <parameter key="data_management" value="auto"/>
+        <parameter key="merge_type" value="all"/>
+      </operator>
+      <operator activated="false" class="write_csv" compatibility="9.7.002" expanded="true" height="82" name="Write CSV" width="90" x="514" y="646">
+        <parameter key="csv_file" value="C:/Users/admin/Desktop/saumya_dm/dtree_pred.csv"/>
+        <parameter key="column_separator" value=","/>
+        <parameter key="write_attribute_names" value="true"/>
+        <parameter key="quote_nominal_values" value="true"/>
+        <parameter key="format_date_attributes" value="true"/>
+        <parameter key="append_to_file" value="false"/>
+        <parameter key="encoding" value="SYSTEM"/>
+      </operator>
+      <operator activated="false" class="write_csv" compatibility="9.7.002" expanded="true" height="82" name="Write CSV (2)" width="90" x="849" y="391">
+        <parameter key="column_separator" value=";"/>
+        <parameter key="write_attribute_names" value="true"/>
+        <parameter key="quote_nominal_values" value="true"/>
+        <parameter key="format_date_attributes" value="true"/>
+        <parameter key="append_to_file" value="false"/>
+        <parameter key="encoding" value="SYSTEM"/>
+      </operator>
+      <connect from_op="Read CSV" from_port="output" to_op="Replace Missing Values" to_port="example set input"/>
+      <connect from_op="Replace Missing Values" from_port="example set output" to_op="Normalize" to_port="example set input"/>
+      <connect from_op="Normalize" from_port="example set output" to_op="Set Role" to_port="example set input"/>
+      <connect from_op="Set Role" from_port="example set output" to_op="Optimize Selection" to_port="example set in"/>
+      <connect from_op="Optimize Selection" from_port="example set out" to_op="Split Data" to_port="example set"/>
+      <connect from_op="Split Data" from_port="partition 1" to_op="Multiply" to_port="input"/>
+      <connect from_op="Multiply" from_port="output 1" to_op="Decision Tree" to_port="training set"/>
+      <connect from_op="Multiply" from_port="output 2" to_op="Random Forest" to_port="training set"/>
+      <connect from_op="Multiply" from_port="output 3" to_op="Generalized Linear Model" to_port="training set"/>
+      <connect from_op="Generalized Linear Model" from_port="model" to_op="Apply Model (4)" to_port="model"/>
+      <connect from_op="Generalized Linear Model" from_port="exampleSet" to_op="Apply Model (4)" to_port="unlabelled data"/>
+      <connect from_op="Apply Model (4)" from_port="labelled data" to_op="Performance (3)" to_port="labelled data"/>
+      <connect from_op="Performance (3)" from_port="performance" to_op="Performance to Data (3)" to_port="performance vector"/>
+      <connect from_op="Performance to Data (3)" from_port="example set" to_op="Generate Attributes (3)" to_port="example set input"/>
+      <connect from_op="Generate Attributes (3)" from_port="example set output" to_op="Append" to_port="example set 3"/>
+      <connect from_op="Random Forest" from_port="model" to_op="Apply Model (3)" to_port="model"/>
+      <connect from_op="Random Forest" from_port="exampleSet" to_op="Apply Model (3)" to_port="unlabelled data"/>
+      <connect from_op="Apply Model (3)" from_port="labelled data" to_op="Performance (4)" to_port="labelled data"/>
+      <connect from_op="Performance (4)" from_port="performance" to_op="Performance to Data (2)" to_port="performance vector"/>
+      <connect from_op="Performance to Data (2)" from_port="example set" to_op="Generate Attributes (2)" to_port="example set input"/>
+      <connect from_op="Generate Attributes (2)" from_port="example set output" to_op="Append" to_port="example set 2"/>
+      <connect from_op="Decision Tree" from_port="model" to_op="Apply Model" to_port="model"/>
+      <connect from_op="Decision Tree" from_port="exampleSet" to_op="Apply Model" to_port="unlabelled data"/>
+      <connect from_op="Apply Model" from_port="labelled data" to_op="Performance" to_port="labelled data"/>
+      <connect from_op="Performance" from_port="performance" to_op="Performance to Data" to_port="performance vector"/>
+      <connect from_op="Performance to Data" from_port="example set" to_op="Generate Attributes" to_port="example set input"/>
+      <connect from_op="Generate Attributes" from_port="example set output" to_op="Append" to_port="example set 1"/>
+      <connect from_op="Append" from_port="merged set" to_port="result 1"/>
+      <portSpacing port="source_input 1" spacing="0"/>
+      <portSpacing port="sink_result 1" spacing="0"/>
+      <portSpacing port="sink_result 2" spacing="0"/>
+    </process>
+  </operator>
+</process>
